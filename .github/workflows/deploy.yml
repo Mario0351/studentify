@@ -38,4 +38,7 @@ jobs:
         run: chmod 400 vockey.pem 
 
       - name: Copiar el war al servidor Tomcat
-        run: scp -o StrictHostKeyChecking=no -i vockey.pem build/libs/studentify.war ubuntu@${{ secrets.DNS_PUBLICA_SERVIDOR }}:/opt/tomcat/webapps
+        run: scp -o StrictHostKeyChecking=no -i vockey.pem build/libs/studentify.war ubuntu@${{ secrets.DNS_PUBLICA_SERVIDOR }}:/tmp/studentify.war
+
+      - name: Mover el war a webapps
+        run: ssh -o StrictHostKeyChecking=no -i vockey.pem ubuntu@${{ secrets.DNS_PUBLICA_SERVIDOR }} "sudo mv /tmp/studentify.war /opt/tomcat/webapps/studentify.war"
